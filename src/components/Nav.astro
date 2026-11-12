@@ -1,0 +1,35 @@
+---
+import { ui, site, type Lang } from '@/i18n/ui';
+
+interface Props {
+  lang: Lang;
+  path: string;
+  altPath: string;
+}
+const { lang, path, altPath } = Astro.props;
+const t = ui[lang];
+const isCurrent = (href: string) => (href === '/' || href === '/en/' ? path === href : path.startsWith(href));
+---
+
+<header class="nav">
+  <div class="wrap wrap-wide nav-inner">
+    <a class="brand" href={lang === 'zh' ? '/' : '/en/'}>{site.name}</a>
+    <nav class="nav-links" aria-label={lang === 'zh' ? '主导航' : 'Main'}>
+      {t.nav.map((item) => (
+        <a href={item.href} aria-current={isCurrent(item.href) ? 'page' : undefined}>{item.label}</a>
+      ))}
+    </nav>
+    <div class="nav-actions">
+      <a class="lang" href={altPath} hreflang={lang === 'zh' ? 'en' : 'zh-CN'} rel="alternate">{t.otherLang}</a>
+    </div>
+    <details class="nav-mobile">
+      <summary aria-label={lang === 'zh' ? '菜单' : 'Menu'}><span></span><span></span></summary>
+      <div class="nav-panel">
+        {t.nav.map((item) => (
+          <a href={item.href} aria-current={isCurrent(item.href) ? 'page' : undefined}>{item.label}</a>
+        ))}
+        <a href={altPath} hreflang={lang === 'zh' ? 'en' : 'zh-CN'}>{t.otherLang}</a>
+      </div>
+    </details>
+  </div>
+</header>

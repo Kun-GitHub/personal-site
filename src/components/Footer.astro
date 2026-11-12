@@ -1,0 +1,21 @@
+---
+import { ui, site, type Lang } from '@/i18n/ui';
+
+const { lang } = Astro.props as { lang: Lang };
+const t = ui[lang];
+const year = new Date().getFullYear();
+---
+
+<footer class="footer">
+  <div class="wrap wrap-wide footer-inner">
+    <div>
+      <strong style="color:var(--ink);font-size:13.5px">{site.name}</strong>
+      <div style="margin-top:4px">{t.footer.tagline}</div>
+    </div>
+    <div class="footer-links">
+      {t.footer.links.map((l) => <a href={l.href}>{l.label}</a>)}
+      <a href={site.github} rel="me noopener">GitHub</a>
+    </div>
+  </div>
+  <div class="wrap wrap-wide fine">© {year} {site.name} · {t.footer.rights}</div>
+</footer>

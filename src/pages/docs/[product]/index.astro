@@ -1,0 +1,17 @@
+---
+import { getCollection, render } from 'astro:content';
+import type { GetStaticPaths } from 'astro';
+import DocsShell from '@/components/DocsShell.astro';
+
+export const getStaticPaths = (async () => {
+  const entries = await getCollection('docs', ({ id }) => /^[^/]+\/zh$/.test(id));
+  return entries.map((entry) => ({ params: { product: entry.id.split('/')[0] }, props: { entry } }));
+}) satisfies GetStaticPaths;
+
+const { entry } = Astro.props;
+const { Content, headings } = await render(entry);
+---
+
+<DocsShell lang="zh" entry={entry} headings={headings}>
+  <Content />
+</DocsShell>

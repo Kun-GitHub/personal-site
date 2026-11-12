@@ -1,0 +1,62 @@
+---
+import '../styles/global.css';
+import Nav from '@/components/Nav.astro';
+import Footer from '@/components/Footer.astro';
+import { ui, site, type Lang } from '@/i18n/ui';
+
+interface Props {
+  lang: Lang;
+  title: string;
+  description: string;
+  /** 本页中英两个版本的路径。没有英文版就只给 zh —— 那时不声明 en 的 hreflang */
+  paths: { zh: string; en?: string };
+  jsonLd?: Record<string, unknown>[];
+  noindex?: boolean;
+  /** 正文是否居中窄栏（文章页用） */
+  narrow?: boolean;
+}
+
+const { lang, title, description, paths, jsonLd = [], noindex = false, narrow = true } = Astro.props;
+const t = ui[lang];
+const abs = (p: string) => new URL(p, Astro.site).href;
+const current = paths[lang] ?? paths.zh;
+const other: Lang = lang === 'zh' ? 'en' : 'zh';
+// 没有对应语言版本时，语言切换落到对方的首页，而不是 404
+const altPath = paths[other] ?? (other === 'en' ? '/en/' : '/');
+
+const pageTitle = current === '/' || current === '/en/' ? title : `${title} · ${t.brand}`;
+---
+
+<!doctype html>
+<html lang={t.htmlLang}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{pageTitle}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={abs(current)} />
+    <link rel="alternate" hreflang="zh-CN" href={abs(paths.zh)} />
+    {paths.en && <link rel="alternate" hreflang="en" href={abs(paths.en)} />}
+    <link rel="alternate" hreflang="x-default" href={abs(paths.zh)} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    {noindex && <meta name="robots" content="noindex" />}
+
+    <meta property="og:type" content={current.startsWith('/blog/') || current.startsWith('/en/blog/') ? 'article' : 'website'} />
+    <meta property="og:site_name" content={t.brand} />
+    <meta property="og:title" content={pageTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={abs(current)} />
+    <meta property="og:locale" content={t.ogLocale} />
+    <meta name="twitter:card" content="summary_large_image" />
+
+    {jsonLd.map((item) => <script type="application/ld+json" set:html={JSON.stringify(item)} />)}
+  </head>
+  <body>
+    <a class="skip" href="#main">{lang === 'zh' ? '跳到正文' : 'Skip to content'}</a>
+    <Nav lang={lang} path={current} altPath={altPath} />
+    <main id="main" class={narrow ? 'wrap' : 'wrap wrap-wide'}>
+      <slot />
+    </main>
+    <Footer lang={lang} />
+  </body>
+</html>

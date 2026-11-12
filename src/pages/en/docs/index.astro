@@ -1,0 +1,50 @@
+---
+import Base from '@/layouts/Base.astro';
+import { ui } from '@/i18n/ui';
+import { products } from '@/data/products';
+import { docPath, listDocs, productsWithDocs } from '@/lib/content';
+
+const lang = 'en' as const;
+const t = ui[lang];
+const slugs = await productsWithDocs(lang);
+const items = await Promise.all(
+  slugs.map(async (slug) => {
+    const product = products.find((p) => p.slug === slug);
+    const docs = await listDocs(lang, slug);
+    return { slug, name: product?.name[lang] ?? slug, tagline: product?.tagline[lang] ?? '', count: docs.length };
+  }),
+);
+
+const jsonLd = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'CollectionPage',
+    name: t.docs.listTitle,
+    url: new URL(lang === 'zh' ? '/docs/' : '/en/docs/', Astro.site).href,
+  },
+];
+---
+
+<Base
+  lang={lang}
+  title={t.docs.listTitle}
+  description={t.docs.listLead}
+  paths={{ zh: '/docs/', en: '/en/docs/' }}
+  jsonLd={jsonLd}
+>
+  <header class="page-head">
+    <h1>{t.docs.listTitle}</h1>
+    <p class="lead">{t.docs.listLead}</p>
+  </header>
+
+  <div class="list" style="margin-bottom:56px">
+    {items.length === 0 && <p class="muted">{t.tags.empty}</p>}
+    {items.map((item) => (
+      <a class="row" href={docPath(lang, item.slug)}>
+        <span class="t">{item.name}</span>
+        <span class="d">{item.count} {lang === 'zh' ? '篇' : 'pages'}</span>
+        <span class="sub">{item.tagline}</span>
+      </a>
+    ))}
+  </div>
+</Base>

@@ -1,0 +1,88 @@
+---
+import Base from '@/layouts/Base.astro';
+import { ui, site } from '@/i18n/ui';
+import { listPosts, postPath, formatDate } from '@/lib/content';
+import { products } from '@/data/products';
+import { docPath } from '@/lib/content';
+
+const lang = 'zh' as const;
+const t = ui[lang];
+const posts = (await listPosts(lang)).slice(0, 3);
+const here = lang === 'zh' ? '/' : '/en/';
+
+const jsonLd = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'Person',
+    name: site.name,
+    url: new URL(here, Astro.site).href,
+    sameAs: [site.github],
+  },
+];
+---
+
+<Base
+  lang={lang}
+  title={lang === 'zh' ? 'WKong · 写代码，做产品' : 'WKong · Software, products, notes'}
+  description={lang === 'zh'
+    ? '个人站点：我在做的产品、帮助文档，以及一些技术笔记。'
+    : 'Personal site: products I build, their documentation, and some technical notes.'}
+  paths={{ zh: '/', en: '/en/' }}
+  jsonLd={jsonLd}
+>
+  <section class="hero">
+    <h1>{site.name}</h1>
+    <p class="lead">
+      {lang === 'zh'
+        ? '做后端，也做前端。在这里记下做过的东西、踩过的坑，和还没想明白的问题。'
+        : 'I write backend and frontend. This is where I keep what I built, what broke, and what I still do not understand.'}
+    </p>
+    <div class="hero-actions">
+      <a class="btn btn-primary" href={lang === 'zh' ? '/blog/' : '/en/blog/'}>{t.nav[1].label}</a>
+      <a class="btn btn-ghost" href={lang === 'zh' ? '/products/' : '/en/products/'}>{t.nav[2].label}</a>
+    </div>
+    <p class="hero-meta">
+      {lang === 'zh' ? '现在在做：' : 'Currently building: '}
+      <a href={docPath(lang, 'training-platform')} style="color:var(--accent)">大肥鱼项目实训平台 →</a>
+    </p>
+  </section>
+
+  <section class="section">
+    <div class="section-head">
+      <h2>{t.tags.latest}</h2>
+      <a href={lang === 'zh' ? '/blog/' : '/en/blog/'}>{t.tags.morePosts} →</a>
+    </div>
+    <div class="list">
+      {posts.length === 0 && <p class="muted">{t.tags.empty}</p>}
+      {posts.map((post) => {
+        const slug = post.id.split('/').slice(1).join('/');
+        return (
+          <a class="row" href={postPath(lang, slug)}>
+            <span class="t">{post.data.title}</span>
+            <span class="d">{formatDate(post.data.date, lang)}</span>
+            <span class="sub">{post.data.description}</span>
+          </a>
+        );
+      })}
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-head">
+      <h2>{t.tags.products}</h2>
+      <a href={lang === 'zh' ? '/products/' : '/en/products/'}>{t.tags.allProducts} →</a>
+    </div>
+    <div class="grid">
+      {products.map((p) => (
+        <div class="card">
+          <h3>{p.name[lang]}<span class="badge">{p.status[lang]}</span></h3>
+          <p>{p.tagline[lang]}</p>
+          <div class="card-links">
+            <a href={docPath(lang, p.slug)}>{t.tags.docs} →</a>
+            <a href={p.url} rel="noopener">站点 →</a>
+          </div>
+        </div>
+      ))}
+    </div>
+  </section>
+</Base>

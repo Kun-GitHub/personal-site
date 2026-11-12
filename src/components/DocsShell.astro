@@ -1,0 +1,107 @@
+---
+import { getCollection, type CollectionEntry } from 'astro:content';
+import Base from '@/layouts/Base.astro';
+import DocsNav from './DocsNav.astro';
+import { ui, type Lang } from '@/i18n/ui';
+import { docParts, docPath, listDocs } from '@/lib/content';
+import { products } from '@/data/products';
+
+interface Props {
+  lang: Lang;
+  entry: CollectionEntry<'docs'>;
+  headings: { depth: number; slug: string; text: string }[];
+}
+
+const { lang, entry, headings } = Astro.props;
+const t = ui[lang];
+const { product, rest } = docParts(entry);
+const docs = await listDocs(lang, product);
+const current = docPath(lang, product, rest);
+
+// 英文版存在才声明 en 的 hreflang：声明了却不给内容，搜索引擎会判撒谎
+const other: Lang = lang === 'zh' ? 'en' : 'zh';
+const otherId = rest ? `${product}/${other}/${rest}` : `${product}/${other}`;
+const hasOther = (await getCollection('docs', ({ id }) => id === otherId)).length > 0;
+const otherPath = hasOther ? docPath(other, product, rest) : undefined;
+const paths = lang === 'zh' ? { zh: current, en: otherPath } : { zh: docPath('zh', product, rest), en: otherPath };
+
+const productName = products.find((p) => p.slug === product)?.name[lang] ?? product;
+const index = docs.findIndex((d) => d.id === entry.id);
+const prev = index > 0 ? docs[index - 1] : undefined;
+const next = index >= 0 && index < docs.length - 1 ? docs[index + 1] : undefined;
+const toc = headings.filter((h) => h.depth === 2);
+const abs = (p: string) => new URL(p, Astro.site).href;
+
+const jsonLd = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: t.docs.crumbHome, item: abs(lang === 'zh' ? '/' : '/en/') },
+      { '@type': 'ListItem', position: 2, name: t.docs.crumbDocs, item: abs(lang === 'zh' ? '/docs/' : '/en/docs/') },
+      { '@type': 'ListItem', position: 3, name: productName, item: abs(docPath(lang, product)) },
+      ...(rest
+        ? [{ '@type': 'ListItem', position: 4, name: entry.data.title, item: abs(current) }]
+        : []),
+    ],
+  },
+];
+---
+
+<Base
+  lang={lang}
+  title={`${entry.data.title} · ${productName} ${t.docs.siteTitle}`}
+  description={entry.data.description}
+  paths={paths}
+  jsonLd={jsonLd}
+  narrow={false}
+>
+  <p class="crumb wrap wrap-wide">
+    <a href={lang === 'zh' ? '/' : '/en/'}>{t.docs.crumbHome}</a>
+    <span>/</span>
+    <a href={lang === 'zh' ? '/docs/' : '/en/docs/'}>{t.docs.crumbDocs}</a>
+    <span>/</span>
+    <a href={docPath(lang, product)}>{productName}</a>
+    {rest && <><span>/</span><span>{entry.data.title}</span></>}
+  </p>
+
+  <div class="wrap wrap-wide doc-layout">
+    <details class="doc-nav-mobile">
+      <summary>{t.docs.navTitle}</summary>
+      <DocsNav lang={lang} product={product} label={productName} docs={docs} current={current} />
+    </details>
+
+    <DocsNav lang={lang} product={product} label={productName} docs={docs} current={current} />
+
+    <article class="prose">
+      <h1 style="font-size:clamp(1.7rem,3.6vw,2.3rem);letter-spacing:-.028em">{entry.data.title}</h1>
+      <p class="muted" style="margin-top:10px">{entry.data.description}</p>
+      <div style="margin-top:26px"><slot /></div>
+
+      <div class="doc-next">
+        {prev && (
+          <a href={docPath(lang, product, docParts(prev).rest)}>
+            <span>{t.docs.prev}</span>{prev.data.title}
+          </a>
+        )}
+        {next && (
+          <a href={docPath(lang, product, docParts(next).rest)}>
+            <span>{t.docs.next}</span>{next.data.title}
+          </a>
+        )}
+        {!next && rest && (
+          <a href={docPath(lang, product)}>
+            <span>{t.docs.backHome}</span>{t.docs.crumbDocs}
+          </a>
+        )}
+      </div>
+    </article>
+
+    {toc.length > 1 && (
+      <aside class="doc-toc">
+        <p class="g">{t.docs.toc}</p>
+        {toc.map((h) => <a href={`#${h.slug}`}>{h.text}</a>)}
+      </aside>
+    )}
+  </div>
+</Base>

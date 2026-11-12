@@ -1,0 +1,36 @@
+---
+import Base from '@/layouts/Base.astro';
+import { ui } from '@/i18n/ui';
+import { products } from '@/data/products';
+import { docPath, productsWithDocs } from '@/lib/content';
+
+const lang = 'en' as const;
+const t = ui[lang];
+const withDocs = await productsWithDocs(lang);
+---
+
+<Base
+  lang={lang}
+  title={t.tags.products}
+  description={t.tags.productsLead}
+  paths={{ zh: '/products/', en: '/en/products/' }}
+>
+  <header class="page-head">
+    <h1>{t.tags.products}</h1>
+    <p class="lead">{t.tags.productsLead}</p>
+  </header>
+
+  <div class="grid" style="margin:8px 0 56px">
+    {products.map((p) => (
+      <div class="card">
+        <h3>{p.name[lang]}<span class="badge">{p.status[lang]}</span></h3>
+        <p>{p.tagline[lang]}</p>
+        <div class="card-links">
+          {withDocs.includes(p.slug) && <a href={docPath(lang, p.slug)}>{t.tags.docs} →</a>}
+          <a href={p.url} rel="noopener">站点 →</a>
+          {p.repo && <a href={p.repo} rel="noopener">GitHub →</a>}
+        </div>
+      </div>
+    ))}
+  </div>
+</Base>

@@ -1,0 +1,23 @@
+---
+import type { Lang } from '@/i18n/ui';
+import { docPath, docParts, type Doc } from '@/lib/content';
+
+interface Props {
+  lang: Lang;
+  /** 产品 slug（拼 URL 用） */
+  product: string;
+  /** 产品显示名（侧栏分组标题） */
+  label: string;
+  docs: Doc[];
+  current: string;
+}
+const { lang, product, label, docs, current } = Astro.props;
+---
+
+<aside class="doc-side">
+  <p class="g">{label}</p>
+  {docs.map((doc) => {
+    const href = docPath(lang, product, docParts(doc).rest);
+    return <a href={href} aria-current={href === current ? 'page' : undefined}>{doc.data.title}</a>;
+  })}
+</aside>
