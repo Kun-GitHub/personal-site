@@ -59,7 +59,7 @@ collections:
             widget: list
             summary: '{{fields.name.zh}}'
             fields:
-              - { label: 'slug（URL 用，英文小写）', name: slug, widget: string }
+              - { label: 'URL 标识（小写英文）', name: slug, widget: string }
               - name: name
                 label: 名称
                 widget: object
@@ -67,7 +67,7 @@ collections:
                   - { label: 中文, name: zh, widget: string }
                   - { label: English, name: en, widget: string }
               - name: tagline
-                label: 一句话
+                label: 简介
                 widget: object
                 fields:
                   - { label: 中文, name: zh, widget: text }
@@ -94,10 +94,10 @@ collections:
             widget: list
             summary: '{{fields.name}}'
             fields:
-              - { label: 'slug（URL 用，英文小写）', name: slug, widget: string }
+              - { label: 'URL 标识（小写英文）', name: slug, widget: string }
               - { label: 名称, name: name, widget: string }
               - name: tagline
-                label: 一句话
+                label: 简介
                 widget: object
                 fields:
                   - { label: 中文, name: zh, widget: text }

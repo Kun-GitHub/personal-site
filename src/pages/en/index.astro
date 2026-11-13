@@ -25,10 +25,10 @@ const jsonLd = [
 
 <Base
   lang={lang}
-  title={lang === 'zh' ? 'Kong · 写代码，做产品' : 'Kong · Software, products, notes'}
+  title={lang === 'zh' ? 'Kong · 软件开发与产品实践' : 'Kong · Software development and products'}
   description={lang === 'zh'
-    ? '个人站点：我在做的产品、帮助文档，以及一些技术笔记。'
-    : 'Personal site: products I build, their documentation, and some technical notes.'}
+    ? '开发软件产品，聚焦高校项目实训，并记录相关工程实践。'
+    : 'I build software products, including a university training platform, and document the engineering work behind them.'}
   paths={{ zh: '/', en: '/en/' }}
   jsonLd={jsonLd}
 >
@@ -36,16 +36,16 @@ const jsonLd = [
     <h1>{site.name}</h1>
     <p class="lead">
       {lang === 'zh'
-        ? '做后端，也做前端。在这里记下做过的东西、踩过的坑，和还没想明白的问题。'
-        : 'I write backend and frontend. This is where I keep what I built, what broke, and what I still do not understand.'}
+        ? '从事后端与前端开发，记录产品开发过程、技术取舍与实践经验。'
+        : 'I work across backend and frontend development. This site documents the products I build and the engineering decisions behind them.'}
     </p>
     <div class="hero-actions">
       <a class="btn btn-primary" href={lang === 'zh' ? '/blog/' : '/en/blog/'}>{t.nav[1].label}</a>
       <a class="btn btn-ghost" href={lang === 'zh' ? '/products/' : '/en/products/'}>{t.nav[2].label}</a>
     </div>
     <p class="hero-meta">
-      {lang === 'zh' ? '现在在做：' : 'Currently building: '}
-      <a href={docPath(lang, 'training-platform')} style="color:var(--accent)">大肥鱼项目实训平台 →</a>
+      {lang === 'zh' ? '正在开发：' : 'In development: '}
+      <a href={docPath(lang, 'training-platform')} style="color:var(--accent)">{lang === 'zh' ? '大肥鱼项目实训平台' : 'Dafeiyu Project Training Platform'} →</a>
     </p>
   </section>
 

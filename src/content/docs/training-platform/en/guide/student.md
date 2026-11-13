@@ -1,25 +1,31 @@
 ---
-title: Work and submit
-description: Student view — claim an environment, do the task, submit a report.
+title: Complete tasks and submit reports
+description: Student guide to starting an environment, completing a testing task and submitting a report.
 order: 3
 ---
 
-Everything happens in the browser; nothing needs installing.
+All steps take place in the browser; no software installation is required.
 
-## 1. Open your training
+## 1. Open a training module
 
-Under **My training** you see the modules your teacher published. Open one to find the tasks and resources.
+Go to **My training** and select a module published by your teacher to view its tasks and resources.
 
-## 2. Open an environment
+## 2. Start an environment
 
-Click **Open environment**. After a few seconds you get a URL and credentials for the system under test.
+Select **Open environment**. The platform usually provides a URL and credentials within 30 seconds.
 
-> Idle environments are suspended after four hours and eventually recycled. Copy out anything you need — screenshots, logs, your own notes. A destroyed environment cannot be recovered.
+> Environments are suspended after four hours of inactivity and eventually recycled. Copy any materials you need, such as screenshots, logs or personal notes. A destroyed environment cannot be recovered.
 
-## 3. Do the task
+## 3. Complete the task
 
-Follow the task inside the system: reproduce the problem, narrow down the cause, record the steps. Keep notes as you go — you will need them in the report.
+Follow the task instructions in the system: reproduce the issue, investigate its cause and record the steps. These notes will be needed for the report.
 
 ## 4. Submit the report
 
-Back on the task page, click **Submit report** and describe the problem, the reproduction steps, the expected and actual results. Submission locks the report, so read it once more before you send it.
+Return to the task page and select **Submit report**. Describe the issue, reproduction steps, and expected and actual results. The report is locked after submission, so review it before submitting.
+
+## Common questions
+
+**How can I restore the environment data?** Select **Reset environment** to restore the initial data.
+
+**Can students share an environment?** No. Each student has an independent environment. Groups are used for task organisation and group-level switches configured by the teacher.

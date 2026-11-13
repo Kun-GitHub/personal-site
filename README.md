@@ -11,9 +11,9 @@ personal-site/
 │   ├── content/
 │   │   ├── posts/{zh,en}/     博客：目录即语言
 │   │   └── docs/<product>/{zh,en}/   各产品文档
-│   ├── data/products.json     产品清单（唯一数据源，后台可编辑）
-│   ├── data/openSource.json   开源项目清单（同上）
-│   ├── data/*.ts              上面两份数据的类型与导出
+│   ├── data/products.json     产品清单（产品站与文档入口，后台可编辑）
+│   ├── data/openSource.json   开源项目清单（项目展示与仓库链接，后台可编辑）
+│   ├── data/*.ts              两份清单的类型与导出
 │   ├── i18n/ui.ts             导航、页脚、按钮等界面文案（中英并列）
 │   ├── lib/content.ts         集合读取与路径拼装
 │   ├── components/            Nav、Footer、DocsShell、DocsNav、ProjectCard
@@ -42,8 +42,8 @@ npm run preview   # 预览构建产物
 | --- | --- |
 | 一篇博客 | `src/content/posts/zh/<slug>.md`（要英文版就同 slug 放到 `en/`）。frontmatter：`title` `description` `date`，可选 `updated` `draft` |
 | 一篇文档 | `src/content/docs/<product>/zh/<page>.md`，`order` 决定侧栏顺序；`<page>/index` 会被 Astro 折叠成 `/docs/<product>/` |
-| 一个产品 | `src/data/products.json` 加一条（或用后台「产品」）+ 建 `src/content/docs/<slug>/`。路由、文档目录、sitemap 自动跟上 |
-| 一个开源项目 | `src/data/openSource.json` 加一条（或用后台「开源项目」）。只有数据，没有内容目录 |
+| 一个产品 | 在 `src/data/products.json` 加一条（或用后台「产品」），并创建 `src/content/docs/<slug>/` 文档目录。产品会显示在首页和产品页，文档路由与 sitemap 自动生成 |
+| 一个开源项目 | 在 `src/data/openSource.json` 加一条（或用后台「开源项目」）。项目会显示在首页和开源项目页，并链接到对应代码仓库；不需要文档目录 |
 
 ## 后台（/admin）
 

@@ -3,7 +3,7 @@ import data from './openSource.json';
 
 /**
  * 开源项目清单。数据在 openSource.json 里（后台 /admin 直接编辑）。
- * 跟 products 是两回事：产品是长期运营的，这里是自己写着玩、代码全公开的东西。
+ * 与产品清单分开维护，记录开源项目的介绍、技术栈与代码仓库。
  */
 export interface OpenSourceProject {
   slug: string;

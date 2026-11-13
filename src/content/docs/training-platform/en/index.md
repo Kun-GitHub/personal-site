@@ -4,16 +4,17 @@ description: Guides for teachers, students and administrators of the Dafeiyu pro
 order: 1
 ---
 
-The platform links four things together: opening an environment, doing the work, submitting a report, grading it. These pages are split by role — read only the one that applies to you.
+The platform supports environment setup, task completion, report submission and grading. Documentation is organised by role so readers can go directly to the relevant guidance.
 
-## Start here
+## By role
 
-1. Teachers: [build a module](/en/docs/training-platform/guide/teacher/) — modules, tasks, resources and groups; publish and students can open environments.
-2. Students: [work and submit](/en/docs/training-platform/guide/student/) — everything in the browser, nothing to install.
-3. Stuck: [FAQ](/en/docs/training-platform/faq/) — environment won't start, training missing, report to edit.
+1. Teachers: [create and manage a training module](/en/docs/training-platform/guide/teacher/) — configure modules, tasks, resources and groups before publishing.
+2. Students: [complete tasks and submit reports](/en/docs/training-platform/guide/student/) — complete tasks in the browser without installing software.
+3. School administrators: manage programmes and classes, import rosters, configure images and feature switches, and review audit records.
+4. Troubleshooting: [FAQ](/en/docs/training-platform/faq/) — guidance on environment startup, training access and report submission.
 
 ## What the platform is
 
-Students click “open environment” and receive a container with the system under test (the Dafeiyu ERP) already installed — seeded with data, accounts, and defects injected as the teacher configured. They reproduce problems and write reports there; the teacher sees the process and the result, and grades it.
+When students select “Open environment,” the platform assigns a container with the system under test (Dafeiyu ERP) installed. It includes test data and accounts, with defects configured by the teacher. Students reproduce issues and write reports in the environment; teachers review the work and results, then assign grades and feedback.
 
-Each campus runs its own deployment, with the database on the school's own server. Student data does not leave the campus.
+Each institution has a separate deployment, with its database running on an institutional server. Student data remains on campus.

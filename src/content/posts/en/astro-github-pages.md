@@ -1,58 +1,60 @@
 ---
 title: Putting a personal site on GitHub Pages with Astro
-description: One site, three kinds of content, path-based Chinese/English routing, all static. Why this stack, and the three things that actually bite.
+description: Notes on building a bilingual static site with Astro and GitHub Pages, including content organisation, URL structure, SEO and deployment configuration.
 date: 2026-11-12
 ---
 
-This site is one Astro project that builds plain HTML, deployed to GitHub Pages behind a custom domain. No server, no database, nothing beyond build output.
+This site is built with Astro as static HTML and deployed to GitHub Pages with a custom domain. It does not require an application server or database at runtime.
 
 ## Why Astro
 
 It has to hold three things at once: a personal homepage, a blog, and help documentation for several products.
 
-I tried two shapes:
+I considered two approaches:
 
-- **Starlight** (Astro's docs theme) gives the best doc experience, sidebar and search included. But under "subpath + bilingual" it generates broken links — sidebar entries missing the prefix, component links gaining an extra language segment. The fixes are: split into a subdomain, or write a pile of patches.
-- **Content collections inside the same project**: routing, sidebar, table of contents, prev/next all written by hand. More code, but prefix bugs become structurally impossible.
+- **Starlight** (Astro's documentation theme) provides features such as a sidebar and search. With this site's subpath and bilingual configuration, we encountered sidebar links missing the path prefix and component links gaining an extra language segment. Addressing these issues would require moving the docs to a subdomain or maintaining additional routing adjustments.
+- **Content collections inside the same project**: routing, sidebar, table of contents, prev/next all written by hand. This requires maintaining some routing code, but keeps URL-prefix handling in one place.
 
-I picked the second. The cost is no doc versioning and no full-text search; both can wait until there is enough content to need them.
+This site uses the second approach. It currently has no documentation versioning or full-text search; those can be evaluated if the content grows enough to require them.
 
 ## How content is organised
 
-The product list is data, the docs are files:
+Products and open-source projects have separate data lists; product documentation is stored in files:
 
 ```
 src/
-├── data/products.ts              # slug, name, tagline, site URL
+├── data/
+│   ├── products.json             # product names, summaries, sites and docs
+│   └── openSource.json           # project summaries, stacks and repositories
 ├── content/
 │   ├── posts/{zh,en}/            # blog: the directory is the language
-│   └── docs/<product>/{zh,en}/   # one doc tree per product
-└── pages/                        # routes grow out of the two above
+│   └── docs/<product>/{zh,en}/   # product documentation
+└── pages/                        # pages are generated from data and content collections
 ```
 
-Adding a product means one entry in the list plus a docs directory. Adding a page means one `md` file, ordered by `order` in the frontmatter. No routing code changes — that is the whole reason this structure exists.
+Adding a product means adding an entry to `products.json` and creating its docs directory. Adding an open-source project means adding its summary, stack and repository links to `openSource.json`. Add documentation pages as Markdown files and use the frontmatter `order` field to set sidebar order. These content changes do not require route code changes.
 
-## Pitfall 1: project pages carry a path prefix
+## 1. GitHub Pages project URL prefixes
 
-Unless the repository is `username.github.io`, the site lives at `username.github.io/<repo>/`, while links hard-coded as `/blog/` and `/docs/` point at the root. The whole site 404s.
+On GitHub Pages, repositories other than `username.github.io` are typically published under `username.github.io/<repo>/`. Links written as root paths such as `/blog/` and `/docs/` then point to the domain root and may fail.
 
-Two ways out: bind a custom domain so the site sits at the domain root (what this site does), or set `base` and rewrite every absolute path and canonical.
+Two options are to bind a custom domain so the site sits at the domain root, as this site does, or to set `base` and update absolute paths and canonical URLs accordingly.
 
-## Pitfall 2: `.nojekyll`
+## 2. Disabling Jekyll with `.nojekyll`
 
-GitHub Pages runs output through Jekyll by default. Jekyll ignores directories starting with an underscore, and Astro's asset directory is `_astro/` — so styles and scripts 404 and the page renders bare.
+GitHub Pages may process output with Jekyll, which ignores directories beginning with an underscore. Astro places assets in `_astro/`, so the stylesheets and scripts may not be published unless Jekyll processing is disabled.
 
-Drop an empty `.nojekyll` into `public/` and it ends up at the output root.
+Add an empty `.nojekyll` file to `public/`; Astro copies it to the output root, where GitHub Pages detects it.
 
-## Pitfall 3: the Cloudflare proxy blocks certificate issuance
+## 3. Cloudflare proxy and certificate issuance
 
-GitHub validates a custom domain over HTTP-01, which requires the name to resolve to GitHub's servers. With the orange cloud on, validation lands on Cloudflare and the certificate never gets issued.
+GitHub validates a custom domain over HTTP-01, which requires the domain to resolve to GitHub's servers. In this site's configuration, enabling the Cloudflare proxy prevented the HTTP-01 validation request from reaching GitHub Pages, so the certificate could not be issued.
 
-The only workable order: keep the record **DNS only** (grey cloud), enter the domain in the repository's Pages settings, wait for the certificate and enable Enforce HTTPS, then switch to proxied with SSL mode **Full (strict)**. Doing it the other way round fails at step one, and the error message will not tell you why.
+For this setup, keep the record **DNS only** (grey cloud), enter the domain in the repository's Pages settings, wait for the certificate, and enable Enforce HTTPS. The record can then be proxied with SSL mode **Full (strict)**. Reversing this order may prevent validation; the resulting error may not identify the proxy as the cause.
 
-## Do not lie in hreflang
+## Declare hreflang only for available translations
 
-Chinese is the default (`/`), English lives under `/en/`. Not every page has an English version — when it is missing, the page still shows Chinese, but do **not** declare an `hreflang="en"` pointing at content that does not exist. A false hreflang is worse than none; search engines stop trusting the whole set.
+Chinese is the default (`/`), English lives under `/en/`. Not every page has an English version — when it is missing, the page still shows Chinese, but do **not** declare an `hreflang="en"` pointing at content that does not exist. Search engines may ignore hreflang declarations that point to unavailable translations. This site therefore emits an English alternate link only when the translation exists.
 
 That decision lives in the layout:
 
@@ -62,10 +64,10 @@ That decision lives in the layout:
 <link rel="alternate" hreflang="x-default" href={abs(paths.zh)} />
 ```
 
-## Next
+## Further improvements
 
-- Search: run Pagefind after the build to generate a static index
+- Search: generate a static search index with Pagefind after the build
 - Analytics: Cloudflare Web Analytics, no cookies
-- Cross-link the product sites and the docs centre instead of publishing the same articles twice
+- Link product sites to the documentation centre to avoid maintaining duplicate content
 
-All of that adds to the current structure rather than changing it.
+These improvements can be added without changing the current architecture.
