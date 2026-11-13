@@ -27,7 +27,7 @@ const withDocs = await productsWithDocs(lang);
         <p>{p.tagline[lang]}</p>
         <div class="card-links">
           {withDocs.includes(p.slug) && <a href={docPath(lang, p.slug)}>{t.tags.docs} →</a>}
-          <a href={p.url} rel="noopener">站点 →</a>
+          <a href={p.url} rel="noopener">{t.tags.site} →</a>
           {p.repo && <a href={p.repo} rel="noopener">GitHub →</a>}
         </div>
       </div>
