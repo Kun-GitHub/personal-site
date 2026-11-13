@@ -4,7 +4,7 @@
  */
 export const site = {
   url: 'https://wkong.kdns.fr',
-  name: 'WKong',
+  name: 'Kong',
   github: 'https://github.com/Kun-GitHub',
 } as const;
 
@@ -12,7 +12,7 @@ export type Lang = 'zh' | 'en';
 
 export const ui = {
   zh: {
-    brand: 'WKong',
+    brand: 'Kong',
     htmlLang: 'zh-CN',
     ogLocale: 'zh_CN',
     otherLang: 'EN',
@@ -68,7 +68,7 @@ export const ui = {
     },
   },
   en: {
-    brand: 'WKong',
+    brand: 'Kong',
     htmlLang: 'en',
     ogLocale: 'en_US',
     otherLang: '中文',
