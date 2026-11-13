@@ -63,10 +63,9 @@ Cloudflare 里的记录（域 `wkong.kdns.fr`，已委托给 CF）：
 
 ## 待替换的占位
 
-- `src/data/products.ts` 里 `training-platform.url` 还是 `https://example.com`，等产品站域名定了替换
 - 首页文案（`src/pages/index.astro`、`src/pages/en/index.astro`）里那句自我介绍是按结构写的，改成自己的话
 - 示例文章 `posts/*/astro-github-pages.md` 可留可删
 
 ## 与产品站的关系
 
-产品站（`practical-training/www/site`）自己的 `/docs/` 和这里是**同一批文章**。同一内容挂两个域名会互相抢排名，所以最终二选一：把 `www` 的 `/docs/*` 301 到 `https://wkong.kdns.fr/docs/training-platform/*`，导航「帮助文档」改成外链。现在产品站还没上线，随时可以切。
+帮助文档只在这里维护：产品站（`practical-training/www/site`，域名 `https://training.wkong.kdns.fr`）已删掉自己的 `/docs` 内容与路由，导航和页脚的「帮助文档」直接外链到 `https://wkong.kdns.fr/docs/training-platform/`（英文 `/en/docs/training-platform/`）。改文档只改本仓库，产品站不用动。

@@ -25,8 +25,7 @@ export const products: Product[] = [
       zh: '给高校软件项目实训用的平台：教师建课分组，学生各拿一台真实的 ERP 环境做测试任务。',
       en: 'A project-training platform for university software courses: teachers set up the module, every student gets a real ERP environment to test.',
     },
-    // TODO: 产品站域名定下来后替换（现在 www/ 那套 Astro 站还没上线）
-    url: 'https://example.com',
+    url: 'https://training.wkong.kdns.fr',
     status: { zh: '在售', en: 'Available' },
     repo: 'https://github.com/Kun-GitHub/practical-training',
   },
