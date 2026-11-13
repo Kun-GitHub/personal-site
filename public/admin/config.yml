@@ -1,0 +1,120 @@
+# yaml-language-server: $schema=https://unpkg.com/@sveltia/cms/schema/sveltia-cms.json
+# 后台地址：https://<域名>/admin/
+# 登录：Sign in with Token —— 粘贴一个 GitHub 个人访问令牌（Fine-grained: 只勾这个仓库的 Contents: Read and write）
+# 不需要 OAuth 服务器，也不占用仓库里的其他文件。
+
+backend:
+  name: github
+  repo: Kun-GitHub/personal-site
+  branch: main
+
+site_url: https://wkong.kdns.fr
+# 上传的图片进 public/images，页面里引用为 /images/xxx
+media_folder: public/images
+public_folder: /images
+
+collections:
+  - name: posts_zh
+    label: 博客（中文）
+    label_singular: 文章
+    folder: src/content/posts/zh
+    extension: md
+    format: frontmatter
+    create: true
+    preview_path: 'blog/{{slug}}/'
+    fields:
+      - { label: 标题, name: title, widget: string }
+      - { label: 摘要, name: description, widget: text }
+      - { label: 发布日期, name: date, widget: datetime, date_format: YYYY-MM-DD, time_format: false, picker_utc: true }
+      - { label: 更新日期（可选）, name: updated, widget: datetime, date_format: YYYY-MM-DD, time_format: false, picker_utc: true, required: false }
+      - { label: 草稿, name: draft, widget: boolean, default: false, required: false }
+      - { label: 正文, name: body, widget: markdown }
+
+  - name: posts_en
+    label: 博客（English）
+    label_singular: Post
+    folder: src/content/posts/en
+    extension: md
+    format: frontmatter
+    create: true
+    preview_path: 'en/blog/{{slug}}/'
+    fields:
+      - { label: Title, name: title, widget: string }
+      - { label: Description, name: description, widget: text }
+      - { label: Date, name: date, widget: datetime, date_format: YYYY-MM-DD, time_format: false, picker_utc: true }
+      - { label: Updated (optional), name: updated, widget: datetime, date_format: YYYY-MM-DD, time_format: false, picker_utc: true, required: false }
+      - { label: Draft, name: draft, widget: boolean, default: false, required: false }
+      - { label: Body, name: body, widget: markdown }
+
+  - name: products
+    label: 产品
+    files:
+      - name: products
+        label: 产品清单
+        file: src/data/products.json
+        fields:
+          - name: items
+            label: 产品
+            label_singular: 产品
+            widget: list
+            summary: '{{fields.name.zh}}'
+            fields:
+              - { label: 'slug（URL 用，英文小写）', name: slug, widget: string }
+              - name: name
+                label: 名称
+                widget: object
+                fields:
+                  - { label: 中文, name: zh, widget: string }
+                  - { label: English, name: en, widget: string }
+              - name: tagline
+                label: 一句话
+                widget: object
+                fields:
+                  - { label: 中文, name: zh, widget: text }
+                  - { label: English, name: en, widget: text }
+              - { label: 产品站地址, name: url, widget: string }
+              - name: status
+                label: 状态
+                widget: object
+                fields:
+                  - { label: 中文, name: zh, widget: string }
+                  - { label: English, name: en, widget: string }
+              - { label: 'GitHub 仓库（可选）', name: repo, widget: string, required: false }
+
+  - name: open_source
+    label: 开源项目
+    files:
+      - name: open_source
+        label: 开源项目清单
+        file: src/data/openSource.json
+        fields:
+          - name: items
+            label: 项目
+            label_singular: 项目
+            widget: list
+            summary: '{{fields.name}}'
+            fields:
+              - { label: 'slug（URL 用，英文小写）', name: slug, widget: string }
+              - { label: 名称, name: name, widget: string }
+              - name: tagline
+                label: 一句话
+                widget: object
+                fields:
+                  - { label: 中文, name: zh, widget: text }
+                  - { label: English, name: en, widget: text }
+              - label: 技术栈
+                name: stack
+                widget: list
+                field: { label: 项, name: item, widget: string }
+              - name: repos
+                label: 仓库链接
+                widget: list
+                summary: '{{fields.url}}'
+                fields:
+                  - name: label
+                    label: 链接文字
+                    widget: object
+                    fields:
+                      - { label: 中文, name: zh, widget: string }
+                      - { label: English, name: en, widget: string }
+                  - { label: URL, name: url, widget: string }

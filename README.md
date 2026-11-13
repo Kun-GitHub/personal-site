@@ -11,13 +11,15 @@ personal-site/
 │   ├── content/
 │   │   ├── posts/{zh,en}/     博客：目录即语言
 │   │   └── docs/<product>/{zh,en}/   各产品文档
-│   ├── data/products.ts       产品清单
-│   ├── data/openSource.ts     开源项目清单
+│   ├── data/products.json     产品清单（唯一数据源，后台可编辑）
+│   ├── data/openSource.json   开源项目清单（同上）
+│   ├── data/*.ts              上面两份数据的类型与导出
 │   ├── i18n/ui.ts             导航、页脚、按钮等界面文案（中英并列）
 │   ├── lib/content.ts         集合读取与路径拼装
 │   ├── components/            Nav、Footer、DocsShell、DocsNav、ProjectCard
 │   ├── layouts/Base.astro     canonical / hreflang / OG / JSON-LD
 │   └── styles/global.css      设计令牌 + 全部样式
+├── public/admin/              后台（Sveltia CMS）：index.html + config.yml
 ├── public/CNAME               wkong.kdns.fr
 ├── public/.nojekyll           不加它 GitHub 会用 Jekyll 吃掉 _astro/
 ├── .github/workflows/pages.yml
@@ -40,8 +42,18 @@ npm run preview   # 预览构建产物
 | --- | --- |
 | 一篇博客 | `src/content/posts/zh/<slug>.md`（要英文版就同 slug 放到 `en/`）。frontmatter：`title` `description` `date`，可选 `updated` `draft` |
 | 一篇文档 | `src/content/docs/<product>/zh/<page>.md`，`order` 决定侧栏顺序；`<page>/index` 会被 Astro 折叠成 `/docs/<product>/` |
-| 一个产品 | `src/data/products.ts` 加一条 + 建 `src/content/docs/<slug>/`。路由、文档目录、sitemap 自动跟上 |
-| 一个开源项目 | `src/data/openSource.ts` 加一条（名称、一句话、技术栈、仓库地址）。只有数据，没有内容目录 |
+| 一个产品 | `src/data/products.json` 加一条（或用后台「产品」）+ 建 `src/content/docs/<slug>/`。路由、文档目录、sitemap 自动跟上 |
+| 一个开源项目 | `src/data/openSource.json` 加一条（或用后台「开源项目」）。只有数据，没有内容目录 |
+
+## 后台（/admin）
+
+站点自带的发布界面，读写的就是这个仓库，没有独立数据库。打开 `/admin/` → **使用访问令牌登录**（不需要 OAuth 服务端）。
+
+令牌：GitHub → Settings → Developer settings → **Fine-grained tokens** → 只勾 `personal-site` 仓库，权限 **Contents: Read and write**。
+
+保存一次 = 提交一次到 `main` → 触发 `pages.yml` → 线上生效。图片传到 `public/images/`，正文里引用 `/images/xxx`。
+
+后台覆盖：博客（中/英）、产品清单、开源项目清单。**文档不在后台里**（多级目录，改了会动 URL），继续按上面的「一篇文档」手写。
 
 路径规则：中文 `/blog/<slug>/`、`/docs/<product>/<page>/`；英文全部加 `/en` 前缀。
 
