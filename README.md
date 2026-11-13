@@ -65,6 +65,10 @@ npm run preview   # 预览构建产物
 2. 推一次 main，`pages.yml` 构建 `dist/` 并发布
 3. Custom domain 填 `wkong.kdns.fr`，Save；等证书签发后勾 **Enforce HTTPS**
 
+**第 1 步没做就先跑 Actions 会失败**：`configure-pages` 调 `GET /repos/{owner}/{repo}/pages` 拿到 404，报 `Get Pages site failed`。此时构建本身是成功的，只是没地方发布。去 Settings 打开 Pages 再 Re-run 即可；action 的 `enablement: true` 选项解决不了——官方说明它需要 `GITHUB_TOKEN` 以外的令牌（PAT 或 GitHub App）。
+
+**Actions 部署方式下 `public/CNAME` 是被忽略的**（只有 "Deploy from a branch" 才读它），自定义域名必须在 Settings 里配。文件留着，将来若换回分支部署仍然有用。
+
 Cloudflare 里的记录（域 `wkong.kdns.fr`，已委托给 CF）：
 
 | 类型 | 名称 | 值 | 代理 |
