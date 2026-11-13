@@ -3,6 +3,8 @@ import Base from '@/layouts/Base.astro';
 import { ui, site } from '@/i18n/ui';
 import { listPosts, postPath, formatDate } from '@/lib/content';
 import { products } from '@/data/products';
+import { openSource } from '@/data/openSource';
+import ProjectCard from '@/components/ProjectCard.astro';
 import { docPath } from '@/lib/content';
 
 const lang = 'zh' as const;
@@ -79,10 +81,19 @@ const jsonLd = [
           <p>{p.tagline[lang]}</p>
           <div class="card-links">
             <a href={docPath(lang, p.slug)}>{t.tags.docs} →</a>
-            <a href={p.url} rel="noopener">站点 →</a>
+            <a href={p.url} rel="noopener">{t.tags.site} →</a>
           </div>
         </div>
       ))}
+    </div>
+  </section>
+  <section class="section">
+    <div class="section-head">
+      <h2>{t.tags.projects}</h2>
+      <a href={lang === 'zh' ? '/projects/' : '/en/projects/'}>{t.tags.allProjects} →</a>
+    </div>
+    <div class="grid">
+      {openSource.map((project) => <ProjectCard project={project} lang={lang} />)}
     </div>
   </section>
 </Base>

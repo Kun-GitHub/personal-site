@@ -20,6 +20,7 @@ export const ui = {
       { href: '/', label: '首页' },
       { href: '/blog/', label: '博客' },
       { href: '/products/', label: '产品' },
+      { href: '/projects/', label: '开源项目' },
       { href: '/docs/', label: '文档' },
     ],
     tags: {
@@ -28,6 +29,9 @@ export const ui = {
       allProducts: '全部产品',
       products: '产品',
       productsLead: '我在做的东西。各自有独立的站点，文档统一放在这里。',
+      projects: '开源项目',
+      allProjects: '全部开源项目',
+      projectsLead: '业余时间写的代码，全部开源。这些不是产品：产品要长期运营、有用户和文档；这些是自己想弄明白某件事时顺手写的，代码公开，随时可以拿去改。',
       docs: '文档',
       site: '站点',
       docsLead: '按产品分。选一个产品，左侧是目录。',
@@ -39,6 +43,7 @@ export const ui = {
       links: [
         { href: '/blog/', label: '博客' },
         { href: '/products/', label: '产品' },
+        { href: '/projects/', label: '开源项目' },
         { href: '/docs/', label: '文档' },
       ],
       rights: '内容按 CC BY 4.0 共享',
@@ -71,6 +76,7 @@ export const ui = {
       { href: '/en/', label: 'Home' },
       { href: '/en/blog/', label: 'Blog' },
       { href: '/en/products/', label: 'Products' },
+      { href: '/en/projects/', label: 'Open source' },
       { href: '/en/docs/', label: 'Docs' },
     ],
     tags: {
@@ -79,6 +85,9 @@ export const ui = {
       allProducts: 'All products',
       products: 'Products',
       productsLead: 'Things I build. Each one has its own site; the docs live here.',
+      projects: 'Open source',
+      allProjects: 'All open-source projects',
+      projectsLead: 'Code I write on my own time, all of it open source. These are not the products above: products are meant to run for years, with users and documentation. These exist because I wanted to figure something out.',
       docs: 'Docs',
       site: 'Site',
       docsLead: 'Grouped by product. Pick one, the table of contents is on the left.',
@@ -90,6 +99,7 @@ export const ui = {
       links: [
         { href: '/en/blog/', label: 'Blog' },
         { href: '/en/products/', label: 'Products' },
+        { href: '/en/projects/', label: 'Open source' },
         { href: '/en/docs/', label: 'Docs' },
       ],
       rights: 'Content licensed CC BY 4.0',

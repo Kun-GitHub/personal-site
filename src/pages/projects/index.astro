@@ -1,0 +1,25 @@
+---
+import Base from '@/layouts/Base.astro';
+import ProjectCard from '@/components/ProjectCard.astro';
+import { ui } from '@/i18n/ui';
+import { openSource } from '@/data/openSource';
+
+const lang = 'zh' as const;
+const t = ui[lang];
+---
+
+<Base
+  lang={lang}
+  title={t.tags.projects}
+  description={t.tags.projectsLead}
+  paths={{ zh: '/projects/', en: '/en/projects/' }}
+>
+  <header class="page-head">
+    <h1>{t.tags.projects}</h1>
+    <p class="lead">{t.tags.projectsLead}</p>
+  </header>
+
+  <div class="grid" style="margin:8px 0 56px">
+    {openSource.map((project) => <ProjectCard project={project} lang={lang} />)}
+  </div>
+</Base>

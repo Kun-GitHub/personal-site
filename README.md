@@ -12,9 +12,10 @@ personal-site/
 │   │   ├── posts/{zh,en}/     博客：目录即语言
 │   │   └── docs/<product>/{zh,en}/   各产品文档
 │   ├── data/products.ts       产品清单
+│   ├── data/openSource.ts     开源项目清单
 │   ├── i18n/ui.ts             导航、页脚、按钮等界面文案（中英并列）
 │   ├── lib/content.ts         集合读取与路径拼装
-│   ├── components/            Nav、Footer、DocsShell、DocsNav
+│   ├── components/            Nav、Footer、DocsShell、DocsNav、ProjectCard
 │   ├── layouts/Base.astro     canonical / hreflang / OG / JSON-LD
 │   └── styles/global.css      设计令牌 + 全部样式
 ├── public/CNAME               wkong.kdns.fr
@@ -40,6 +41,7 @@ npm run preview   # 预览构建产物
 | 一篇博客 | `src/content/posts/zh/<slug>.md`（要英文版就同 slug 放到 `en/`）。frontmatter：`title` `description` `date`，可选 `updated` `draft` |
 | 一篇文档 | `src/content/docs/<product>/zh/<page>.md`，`order` 决定侧栏顺序；`<page>/index` 会被 Astro 折叠成 `/docs/<product>/` |
 | 一个产品 | `src/data/products.ts` 加一条 + 建 `src/content/docs/<slug>/`。路由、文档目录、sitemap 自动跟上 |
+| 一个开源项目 | `src/data/openSource.ts` 加一条（名称、一句话、技术栈、仓库地址）。只有数据，没有内容目录 |
 
 路径规则：中文 `/blog/<slug>/`、`/docs/<product>/<page>/`；英文全部加 `/en` 前缀。
 

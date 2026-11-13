@@ -6,6 +6,7 @@ const staticPages = [
   { zh: '/', en: '/en/' },
   { zh: '/blog/', en: '/en/blog/' },
   { zh: '/products/', en: '/en/products/' },
+  { zh: '/projects/', en: '/en/projects/' },
   { zh: '/docs/', en: '/en/docs/' },
 ];
 

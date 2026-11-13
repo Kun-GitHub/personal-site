@@ -1,0 +1,23 @@
+---
+import type { Lang } from '@/i18n/ui';
+import type { OpenSourceProject } from '@/data/openSource';
+
+interface Props {
+  project: OpenSourceProject;
+  lang: Lang;
+}
+const { project, lang } = Astro.props;
+---
+
+<div class="card">
+  <h3>{project.name}</h3>
+  <p>{project.tagline[lang]}</p>
+  <div class="chips">
+    {project.stack.map((item) => <span class="chip">{item}</span>)}
+  </div>
+  <div class="card-links">
+    {project.repos.map((repo) => (
+      <a href={repo.url} rel="noopener">{repo.label[lang]} →</a>
+    ))}
+  </div>
+</div>
