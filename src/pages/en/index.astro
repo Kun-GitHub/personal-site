@@ -27,8 +27,8 @@ const jsonLd = [
   lang={lang}
   title={lang === 'zh' ? 'Kong · 软件开发与产品实践' : 'Kong · Software development and products'}
   description={lang === 'zh'
-    ? '开发软件产品，聚焦高校项目实训，并记录相关工程实践。'
-    : 'I build software products, including a university training platform, and document the engineering work behind them.'}
+    ? '软件工程师与技术负责人，关注智能硬件、物联网、音视频与 SaaS，记录产品研发、系统架构、团队交付和开源实践。'
+    : 'Software engineer and technical lead working across smart hardware, IoT, audio/video and SaaS, documenting product development, architecture, team delivery and open-source work.'}
   paths={{ zh: '/', en: '/en/' }}
   jsonLd={jsonLd}
 >
@@ -36,8 +36,8 @@ const jsonLd = [
     <h1>{site.name}</h1>
     <p class="lead">
       {lang === 'zh'
-        ? '从事后端与前端开发，记录产品开发过程、技术取舍与实践经验。'
-        : 'I work across backend and frontend development. This site documents the products I build and the engineering decisions behind them.'}
+        ? '我是一名软件工程师与技术负责人，长期参与智能硬件、物联网、音视频和 SaaS 产品研发，经验覆盖 Android 与 iOS、Java 与 Go 服务端、系统架构和云原生基础设施，也负责技术决策、核心开发与团队协作，持续把产品从方案推进到可靠交付。'
+        : 'I am a software engineer and technical lead working across smart hardware, IoT, audio/video and SaaS products, from Android and iOS apps to Java and Go services, system architecture, cloud-native infrastructure and team delivery; I turn that work into products, open-source projects and practical engineering notes.'}
     </p>
     <div class="hero-actions">
       <a class="btn btn-primary" href={lang === 'zh' ? '/blog/' : '/en/blog/'}>{t.nav[1].label}</a>

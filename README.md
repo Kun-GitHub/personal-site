@@ -79,10 +79,10 @@ Cloudflare 里的记录（域 `wkong.kdns.fr`，已委托给 CF）：
 
 顺序不能反：**先灰云签证书，再开橙云**（SSL 模式 Full strict）。开着代理时 GitHub 拿不到 HTTP-01 验证，证书永远签不下来。
 
-## 待替换的占位
+## 内容维护
 
-- 首页文案（`src/pages/index.astro`、`src/pages/en/index.astro`）里那句自我介绍是按结构写的，改成自己的话
-- 示例文章 `posts/*/astro-github-pages.md` 可留可删
+- 首页简介维护在 `src/pages/index.astro` 与 `src/pages/en/index.astro`；详细个人介绍以中英文博客 `about-kong.md` 维护
+- 示例文章 `posts/*/astro-github-pages.md` 记录本站搭建实践，可按需保留或删除
 
 ## 与产品站的关系
 

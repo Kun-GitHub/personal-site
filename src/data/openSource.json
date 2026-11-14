@@ -4,17 +4,32 @@
       "slug": "saas-zero",
       "name": "SaaS-Zero",
       "tagline": {
-        "zh": "多租户 SaaS 管理平台，采用 go-zero 与 gRPC 构建服务，使用 Ant Design Pro 实现界面，包含租户管理、RBAC 权限、套餐与审计日志。",
-        "en": "A multi-tenant SaaS administration platform built with go-zero, gRPC and Ant Design Pro. It includes tenant provisioning, RBAC, plans and audit logs."
+        "zh": "面向多租户 SaaS 的 Go 微服务底座，基于 go-zero、gRPC、Ent 与 Casbin，持续完善租户隔离、权限控制和平台工程能力。",
+        "en": "A Go microservices foundation for multi-tenant SaaS, built with go-zero, gRPC, Ent and Casbin, with an ongoing focus on tenant isolation, authorization and platform engineering."
       },
-      "stack": ["Go", "go-zero", "gRPC", "ent", "Casbin", "PostgreSQL", "React", "Ant Design Pro"],
+      "stack": [
+        "Go",
+        "go-zero",
+        "gRPC",
+        "ent",
+        "Casbin",
+        "PostgreSQL",
+        "React",
+        "Ant Design Pro"
+      ],
       "repos": [
         {
-          "label": { "zh": "后端", "en": "Backend" },
+          "label": {
+            "zh": "后端",
+            "en": "Backend"
+          },
           "url": "https://github.com/saas-zero/saas-zero"
         },
         {
-          "label": { "zh": "前端", "en": "Frontend" },
+          "label": {
+            "zh": "前端",
+            "en": "Frontend"
+          },
           "url": "https://github.com/Kun-GitHub/saas-zero-web"
         }
       ]
@@ -23,16 +38,50 @@
       "slug": "mini-ruoyi",
       "name": "mini-ruoyi",
       "tagline": {
-        "zh": "面向 1 核 1 GB 服务器的轻量管理系统，由 Go 二进制文件和前端静态文件组成。可通过 scp 部署，无需 Nginx、Node.js 或独立数据库服务（数据使用 SQLite）。",
-        "en": "A lightweight admin system for a 1-core, 1 GB server. Deployment consists of a Go binary and static front-end files; it requires no Nginx, Node.js or separate database service (data is stored in SQLite)."
+        "zh": "为 1 核 1 GB 服务器设计的轻量管理系统，采用 Go、Gin、SQLite（零 CGO）和 Svelte 5；后端直接托管前端静态文件，无需独立数据库服务。",
+        "en": "A lightweight admin system for a 1-core, 1 GB server, built with Go, Gin, SQLite (zero CGO) and Svelte 5. The backend serves the static frontend without a separate database service."
       },
-      "stack": ["Go", "Gin", "SQLite", "Svelte 5"],
+      "stack": [
+        "Go",
+        "Gin",
+        "SQLite",
+        "Svelte 5"
+      ],
       "repos": [
         {
-          "label": { "zh": "仓库", "en": "Repository" },
+          "label": {
+            "zh": "仓库",
+            "en": "Repository"
+          },
           "url": "https://github.com/Kun-GitHub/mini-ruoyi"
+        }
+      ]
+    },
+    {
+      "slug": "ruoyi-go",
+      "name": "RuoYi-Go（已暂停）",
+      "tagline": {
+        "zh": "基于 Go 的单体 RBAC 管理系统参考实现，以 DDD 和六边形架构探索分层设计；项目目前已暂停，多租户方向由 SaaS-Zero 承接。",
+        "en": "A Go monolithic RBAC admin reference implementation exploring DDD and hexagonal architecture. The project is paused; SaaS-Zero carries the work forward for multi-tenant systems."
+      },
+      "stack": [
+        "Go",
+        "Iris",
+        "DDD",
+        "Hexagonal architecture",
+        "GORM",
+        "RuoYi-Vue3"
+      ],
+      "repos": [
+        {
+          "label": {
+            "zh": "代码仓库",
+            "en": "Repository"
+          },
+          "url": "https://github.com/Kun-GitHub/RuoYi-Go"
         }
       ]
     }
   ]
 }
+

@@ -14,6 +14,7 @@ const year = new Date().getFullYear();
     </div>
     <div class="footer-links">
       {t.footer.links.map((l) => <a href={l.href}>{l.label}</a>)}
+      <a href="mailto:hot_kun@hotmail.com">{lang === 'zh' ? '邮箱' : 'Email'}</a>
       <a href={site.github} rel="me noopener">GitHub</a>
     </div>
   </div>
