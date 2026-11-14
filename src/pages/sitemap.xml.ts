@@ -1,6 +1,6 @@
 import type { APIRoute } from 'astro';
 import { getCollection } from 'astro:content';
-import { postSlug, docParts, docPath } from '@/lib/content';
+import { postSlug, docParts, docPath, type Doc } from '@/lib/content';
 
 const staticPages = [
   { zh: '/', en: '/en/' },
@@ -37,20 +37,22 @@ export const GET: APIRoute = async ({ site }) => {
 
   // 文档：同产品同路径有英文版才给 en
   const docs = await getCollection('docs');
-  const byPath = new Map<string, { zh?: boolean; en?: boolean }>();
+  const byPath = new Map<string, { zh?: Doc; en?: Doc }>();
   for (const doc of docs) {
     const { product, lang, rest } = docParts(doc);
     const key = `${product}|${rest}`;
     const entry = byPath.get(key) ?? {};
-    if (lang === 'zh') entry.zh = true;
-    else entry.en = true;
+    if (lang === 'zh') entry.zh = doc;
+    else entry.en = doc;
     byPath.set(key, entry);
   }
-  for (const [key, entry] of byPath) {
+  for (const [key, pair] of byPath) {
     const [product, rest] = key.split('|');
+    const updated = (pair.zh ?? pair.en)!.data.updated;
     pages.push({
-      zh: entry.zh ? docPath('zh', product, rest) : undefined,
-      en: entry.en ? docPath('en', product, rest) : undefined,
+      zh: pair.zh ? docPath('zh', product, rest) : undefined,
+      en: pair.en ? docPath('en', product, rest) : undefined,
+      lastmod: updated ? updated.toISOString().slice(0, 10) : undefined,
     });
   }
 

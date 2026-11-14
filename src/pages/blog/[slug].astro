@@ -2,7 +2,7 @@
 import { getCollection, render } from 'astro:content';
 import type { GetStaticPaths } from 'astro';
 import Base from '@/layouts/Base.astro';
-import { ui } from '@/i18n/ui';
+import { ui, site } from '@/i18n/ui';
 import { postPath, formatDate, postSlug } from '@/lib/content';
 
 export const getStaticPaths = (async () => {
@@ -34,6 +34,9 @@ const jsonLd = [
     datePublished: entry.data.date.toISOString(),
     dateModified: (entry.data.updated ?? entry.data.date).toISOString(),
     inLanguage: lang === 'zh' ? 'zh-CN' : 'en',
+    url: new URL(postPath(lang, slug), Astro.site).href,
+    image: new URL(site.ogImage, Astro.site).href,
+    author: { '@type': 'Person', name: site.name, url: new URL('/', Astro.site).href },
     mainEntityOfPage: new URL(postPath(lang, slug), Astro.site).href,
   },
 ];

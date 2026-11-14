@@ -18,6 +18,8 @@ const jsonLd = [
     '@type': 'Person',
     name: site.name,
     url: new URL(here, Astro.site).href,
+    jobTitle: '软件工程师与技术负责人',
+    knowsAbout: ['智能硬件', '物联网', '音视频', 'SaaS', '系统架构', 'Go', 'Java', 'Android', 'iOS'],
     sameAs: [site.github],
   },
 ];
@@ -28,7 +30,7 @@ const jsonLd = [
   title={lang === 'zh' ? 'Kong · 软件开发与产品实践' : 'Kong · Software development and products'}
   description={lang === 'zh'
     ? '软件工程师与技术负责人，关注智能硬件、物联网、音视频与 SaaS，记录产品研发、系统架构、团队交付和开源实践。'
-    : 'Software engineer and technical lead working across smart hardware, IoT, audio/video and SaaS, documenting product development, system architecture, team delivery and open-source practice.'}
+    : 'Software engineer and technical lead across smart hardware, IoT, audio/video and SaaS. Notes on product development, architecture and delivery.'}
   paths={{ zh: '/', en: '/en/' }}
   jsonLd={jsonLd}
 >

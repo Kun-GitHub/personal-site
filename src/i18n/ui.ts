@@ -6,6 +6,8 @@ export const site = {
   url: 'https://wkong.kdns.fr',
   name: 'Kong',
   github: 'https://github.com/Kun-GitHub',
+  /** 全站默认社交分享图（1200×630），放在 public/ 下 */
+  ogImage: '/og.png',
 } as const;
 
 export type Lang = 'zh' | 'en';
@@ -87,7 +89,7 @@ export const ui = {
       productsLead: 'Products I develop and maintain. Each has its own site, with documentation collected here.',
       projects: 'Open source',
       allProjects: 'All open-source projects',
-      projectsLead: 'This section lists open-source projects I develop independently. Each explores a specific technical problem and is maintained separately from the products intended for long-term use.',
+      projectsLead: 'Open-source projects I develop independently. Each explores a specific technical problem and is maintained separately from my long-term products.',
       docs: 'Docs',
       site: 'Site',
       docsLead: 'Documentation is organised by product. Select a product to browse its chapters in the sidebar.',

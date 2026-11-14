@@ -83,6 +83,7 @@ Cloudflare 里的记录（域 `wkong.kdns.fr`，已委托给 CF）：
 
 - 首页简介维护在 `src/pages/index.astro` 与 `src/pages/en/index.astro`；详细个人介绍以中英文博客 `about-kong.md` 维护
 - 示例文章 `posts/*/astro-github-pages.md` 记录本站搭建实践，可按需保留或删除
+- 社交分享图是 `public/og.png`（1200×630），全站共用；换图保持同名即可
 
 ## 与产品站的关系
 
