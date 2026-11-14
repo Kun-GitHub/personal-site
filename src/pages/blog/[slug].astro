@@ -6,7 +6,7 @@ import { ui } from '@/i18n/ui';
 import { postPath, formatDate, postSlug } from '@/lib/content';
 
 export const getStaticPaths = (async () => {
-  const posts = await getCollection('posts', ({ id }) => id.startsWith('zh/'));
+  const posts = await getCollection('posts', ({ id, data }) => id.startsWith('zh/') && !data.draft);
   return posts.map((entry) => ({ params: { slug: postSlug(entry) }, props: { entry } }));
 }) satisfies GetStaticPaths;
 
@@ -16,10 +16,14 @@ const lang = 'zh' as const;
 const t = ui[lang];
 const slug = postSlug(entry);
 
-const enPosts = await getCollection('posts', ({ id }) => id === `en/${slug}`);
-const zhPosts = await getCollection('posts', ({ id }) => id === `zh/${slug}`);
-const paths = { zh: postPath('zh', slug), en: enPosts.length ? postPath('en', slug) : undefined };
-void zhPosts;
+const [zhPosts, enPosts] = await Promise.all([
+  getCollection('posts', ({ id, data }) => id === `zh/${slug}` && !data.draft),
+  getCollection('posts', ({ id, data }) => id === `en/${slug}` && !data.draft),
+]);
+const paths = {
+  zh: zhPosts.length ? postPath('zh', slug) : undefined,
+  en: enPosts.length ? postPath('en', slug) : undefined,
+};
 
 const jsonLd = [
   {

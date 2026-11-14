@@ -10,14 +10,14 @@ const staticPages = [
   { zh: '/docs/', en: '/en/docs/' },
 ];
 
-type Page = { zh: string; en?: string; lastmod?: string };
+type Page = { zh?: string; en?: string; lastmod?: string };
 
 export const GET: APIRoute = async ({ site }) => {
   const abs = (p: string) => new URL(p, site!).href;
   const pages: Page[] = [...staticPages];
 
   // 博客：同 slug 有英文版才给 en
-  const posts = await getCollection('posts');
+  const posts = await getCollection('posts', ({ data }) => !data.draft);
   const bySlug = new Map<string, { zh?: typeof posts[number]; en?: typeof posts[number] }>();
   for (const post of posts) {
     const slug = postSlug(post);
@@ -29,7 +29,7 @@ export const GET: APIRoute = async ({ site }) => {
   for (const [slug, pair] of bySlug) {
     const date = (pair.zh ?? pair.en)!.data;
     pages.push({
-      zh: `/blog/${slug}/`,
+      zh: pair.zh ? `/blog/${slug}/` : undefined,
       en: pair.en ? `/en/blog/${slug}/` : undefined,
       lastmod: (date.updated ?? date.date).toISOString().slice(0, 10),
     });
@@ -46,25 +46,28 @@ export const GET: APIRoute = async ({ site }) => {
     else entry.en = true;
     byPath.set(key, entry);
   }
-  for (const key of byPath.keys()) {
+  for (const [key, entry] of byPath) {
     const [product, rest] = key.split('|');
-    pages.push({ zh: docPath('zh', product, rest), en: docPath('en', product, rest) });
+    pages.push({
+      zh: entry.zh ? docPath('zh', product, rest) : undefined,
+      en: entry.en ? docPath('en', product, rest) : undefined,
+    });
   }
 
   const urls = pages
     .flatMap((page) => [
-      { loc: abs(page.zh), href: page.zh, lang: 'zh-CN', page },
+      ...(page.zh ? [{ loc: abs(page.zh), href: page.zh, lang: 'zh-CN', page }] : []),
       ...(page.en ? [{ loc: abs(page.en), href: page.en, lang: 'en', page }] : []),
     ])
-    .map(({ loc, lang, page }) =>
+    .map(({ loc, href, lang, page }) =>
       [
         '  <url>',
         `    <loc>${loc}</loc>`,
-        `    <xhtml:link rel="alternate" hreflang="zh-CN" href="${abs(page.zh)}"/>`,
+        ...(page.zh ? [`    <xhtml:link rel="alternate" hreflang="zh-CN" href="${abs(page.zh)}"/>`] : []),
         ...(page.en ? [`    <xhtml:link rel="alternate" hreflang="en" href="${abs(page.en)}"/>`] : []),
-        `    <xhtml:link rel="alternate" hreflang="x-default" href="${abs(page.zh)}"/>`,
+        `    <xhtml:link rel="alternate" hreflang="x-default" href="${abs(page.zh ?? page.en!)}"/>`,
         ...(page.lastmod ? [`    <lastmod>${page.lastmod}</lastmod>`] : []),
-        `    <priority>${page.zh === '/' && lang === 'zh-CN' ? '1.0' : lang === 'zh-CN' ? '0.8' : '0.6'}</priority>`,
+        `    <priority>${href === '/' ? '1.0' : lang === 'zh-CN' ? '0.8' : '0.6'}</priority>`,
         '  </url>',
       ].join('\n'),
     )

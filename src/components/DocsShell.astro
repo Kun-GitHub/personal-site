@@ -18,12 +18,16 @@ const { product, rest } = docParts(entry);
 const docs = await listDocs(lang, product);
 const current = docPath(lang, product, rest);
 
-// 英文版存在才声明 en 的 hreflang：声明了却不给内容，搜索引擎会判撒谎
-const other: Lang = lang === 'zh' ? 'en' : 'zh';
-const otherId = rest ? `${product}/${other}/${rest}` : `${product}/${other}`;
-const hasOther = (await getCollection('docs', ({ id }) => id === otherId)).length > 0;
-const otherPath = hasOther ? docPath(other, product, rest) : undefined;
-const paths = lang === 'zh' ? { zh: current, en: otherPath } : { zh: docPath('zh', product, rest), en: otherPath };
+const zhId = rest ? `${product}/zh/${rest}` : `${product}/zh`;
+const enId = rest ? `${product}/en/${rest}` : `${product}/en`;
+const [zhDocs, enDocs] = await Promise.all([
+  getCollection('docs', ({ id }) => id === zhId),
+  getCollection('docs', ({ id }) => id === enId),
+]);
+const paths = {
+  zh: zhDocs.length ? docPath('zh', product, rest) : undefined,
+  en: enDocs.length ? docPath('en', product, rest) : undefined,
+};
 
 const productName = products.find((p) => p.slug === product)?.name[lang] ?? product;
 const index = docs.findIndex((d) => d.id === entry.id);
