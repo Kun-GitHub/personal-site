@@ -5,11 +5,12 @@ import { listPosts, postPath, formatDate } from '@/lib/content';
 import { products } from '@/data/products';
 import { openSource } from '@/data/openSource';
 import ProjectCard from '@/components/ProjectCard.astro';
-import { docPath } from '@/lib/content';
+import { docPath, productsWithDocs } from '@/lib/content';
 
 const lang = 'zh' as const;
 const t = ui[lang];
 const posts = (await listPosts(lang)).slice(0, 3);
+const withDocs = await productsWithDocs(lang);
 const here = lang === 'zh' ? '/' : '/en/';
 
 const jsonLd = [
@@ -82,7 +83,7 @@ const jsonLd = [
           <h3>{p.name[lang]}<span class="badge">{p.status[lang]}</span></h3>
           <p>{p.tagline[lang]}</p>
           <div class="card-links">
-            <a href={docPath(lang, p.slug)}>{t.tags.docs} →</a>
+            {withDocs.includes(p.slug) && <a href={docPath(lang, p.slug)}>{t.tags.docs} →</a>}
             <a href={p.url} rel="noopener">{t.tags.site} →</a>
           </div>
         </div>

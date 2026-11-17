@@ -20,15 +20,15 @@
       "repos": [
         {
           "label": {
-            "zh": "后端",
-            "en": "Backend"
+            "zh": "代码仓库（后端）",
+            "en": "Repository (backend)"
           },
           "url": "https://github.com/saas-zero/saas-zero"
         },
         {
           "label": {
-            "zh": "前端",
-            "en": "Frontend"
+            "zh": "代码仓库（前端）",
+            "en": "Repository (frontend)"
           },
           "url": "https://github.com/Kun-GitHub/saas-zero-web"
         }
@@ -50,7 +50,7 @@
       "repos": [
         {
           "label": {
-            "zh": "仓库",
+            "zh": "代码仓库",
             "en": "Repository"
           },
           "url": "https://github.com/Kun-GitHub/mini-ruoyi"
