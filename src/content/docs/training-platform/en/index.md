@@ -15,6 +15,6 @@ The platform supports environment setup, task completion, report submission and 
 
 ## What the platform is
 
-When students select “Open environment,” the platform assigns a container with the system under test (Dafeiyu ERP) installed. It includes test data and accounts, with defects configured by the teacher. Students reproduce issues and write reports in the environment; teachers review the work and results, then assign grades and feedback.
+When students select “Open environment,” the platform assigns a container with the system under test installed. It ships with the Dafeiyu ERP by default, but any project packaged as an image works the same way — the platform does not lock you to one system. The container includes test data and accounts, with defects configured by the teacher. Students reproduce issues and write reports in the environment; teachers review the work and results, then assign grades and feedback.
 
 Each institution has a separate deployment, with its database running on an institutional server. Student data remains on campus.

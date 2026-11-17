@@ -7,8 +7,8 @@
         "en": "Dafeiyu Project Training Platform"
       },
       "tagline": {
-        "zh": "面向高校软件项目实训的教学平台，支持教师创建课程与分组，并为每位学生提供独立的 ERP 测试环境。",
-        "en": "A training platform for university software courses. Teachers create modules and groups, and each student receives an independent ERP environment for testing."
+        "zh": "任何项目都能变成一堂实训课：项目打成镜像放进镜像广场，学生一键拿到能跑的真实系统；教师建课分组，过程与成绩留痕。",
+        "en": "Turn any project into a hands-on course: projects are packaged as images in a marketplace, so each student gets a running system in one click, while teachers run modules and groups with grading on record."
       },
       "url": "https://training.wkong.kdns.fr",
       "status": {
