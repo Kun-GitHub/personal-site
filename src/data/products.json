@@ -16,6 +16,22 @@
         "en": "For sale"
       },
       "repo": "https://github.com/Kun-GitHub/practical-training"
+    },
+    {
+      "slug": "dongyuan-yinji",
+      "name": {
+        "zh": "东源印记",
+        "en": "Dongyuan Yinji"
+      },
+      "tagline": {
+        "zh": "东源县革命遗址导览平台：遗址图文详情、条件筛选、语音导览、导览路线与知识问答，配套管理后台维护内容。已交付为微信小程序。",
+        "en": "A guide to the revolutionary heritage sites of Dongyuan County: illustrated entries, filters, audio guides, suggested routes and quizzes, with an admin console behind it. Delivered as a WeChat mini-program."
+      },
+      "url": "https://dyxhsyj.cn/",
+      "status": {
+        "zh": "已交付",
+        "en": "Delivered"
+      }
     }
   ]
 }
