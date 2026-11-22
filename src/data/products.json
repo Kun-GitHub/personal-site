@@ -7,15 +7,14 @@
         "en": "Dafeiyu Project Training Platform"
       },
       "tagline": {
-        "zh": "任何项目都能变成一堂实训课：项目打成镜像放进镜像广场，学生一键拿到能跑的真实系统；教师建课分组，过程与成绩留痕。",
-        "en": "Turn any project into a hands-on course: projects are packaged as images in a marketplace, so each student gets a running system in one click, while teachers run modules and groups with grading on record."
+        "zh": "把项目镜像变成实训课：本机与 SSH Docker 多节点资源池，按容量调度、排队与打散或集中编排，支持每人一台或小组共用及报告评分。平台闭源，按校授权私有化部署。",
+        "en": "Turn project images into hands-on courses: a multi-node local/SSH Docker pool with capacity-aware scheduling, queues and spread/bin-pack placement, individual or shared group environments, and report grading. Closed source, licensed per school for private deployment."
       },
       "url": "https://training.wkong.kdns.fr",
       "status": {
         "zh": "在售",
         "en": "For sale"
-      },
-      "repo": "https://github.com/Kun-GitHub/practical-training"
+      }
     },
     {
       "slug": "dongyuan-yinji",

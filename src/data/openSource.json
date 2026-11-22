@@ -81,6 +81,37 @@
           "url": "https://github.com/Kun-GitHub/RuoYi-Go"
         }
       ]
+    },
+    {
+      "slug": "dafeiyu-erp",
+      "name": "大肥鱼 ERP（Dafeiyu ERP）",
+      "tagline": {
+        "zh": "面向项目实训的 ERP 示例，提供 Go 后端、Svelte 5 界面与可选 Android 客户端；代码采用 MIT 许可，名称与商标权保留，镜像接入以独立仓库契约为准。",
+        "en": "An ERP example for project-based training, with a Go backend, Svelte 5 UI and optional Android client. Code is MIT-licensed; name and trademark rights are reserved. Image integration follows its separate repository contract."
+      },
+      "stack": [
+        "Go",
+        "Gin",
+        "MySQL",
+        "Svelte 5",
+        "Android"
+      ],
+      "repos": [
+        {
+          "label": {
+            "zh": "GitHub（国外）",
+            "en": "GitHub (international)"
+          },
+          "url": "https://github.com/training-image-marketplace/Dafeiyu-erp"
+        },
+        {
+          "label": {
+            "zh": "Gitee（国内）",
+            "en": "Gitee (China)"
+          },
+          "url": "https://gitee.com/training-image-marketplace/Dafeiyu-erp"
+        }
+      ]
     }
   ]
 }

@@ -21,7 +21,7 @@ personal-site/
 │   └── styles/global.css      设计令牌 + 全部样式
 ├── public/admin/              后台（Sveltia CMS）：index.html + config.yml
 ├── public/CNAME               wkong.kdns.fr
-├── public/.nojekyll           不加它 GitHub 会用 Jekyll 吃掉 _astro/
+├── public/.nojekyll           分支发布预构建文件的兼容约定；Actions artifact 发布不依赖它
 ├── .github/workflows/pages.yml
 └── preview/                   渲染留档（改版对照用，不进构建）
 ```
@@ -77,14 +77,18 @@ Cloudflare 里的记录（域 `wkong.kdns.fr`，已委托给 CF）：
 | CNAME | `www` | `wkong.kdns.fr` | DNS only |
 | TXT | `_github-pages-challenge-kun-github` | GitHub 给的 token | — |
 
-顺序不能反：**先灰云签证书，再开橙云**（SSL 模式 Full strict）。开着代理时 GitHub 拿不到 HTTP-01 验证，证书永远签不下来。
+排查建议：先用 DNS only 验证 GitHub 自定义域名和 HTTPS，再按需测试 Cloudflare 代理（Full strict）。代理并非必然导致签发失败；出现域名检查或后续续证问题时先恢复 DNS only 分层排查。不要把一次签发成功当作永久免维护。
+
+GitHub Pages 与 Cloudflare Pages 是两套托管产品，后者不需要先开启 GitHub Pages。本站这轮只更新内容，不修改上述实际发布工作流与 DNS。完整公开仓库方案见 `/blog/github-pages-cloudflare/`，私有仓库接 Pages 见 `/blog/private-repo-cloudflare-pages/`；两者均不承诺中国大陆全网可达。
 
 ## 内容维护
 
 - 首页简介维护在 `src/pages/index.astro` 与 `src/pages/en/index.astro`；详细个人介绍以中英文博客 `about-kong.md` 维护
-- 示例文章 `posts/*/astro-github-pages.md` 记录本站搭建实践，可按需保留或删除
+- 「个人站」系列保持已有 slug：`astro-github-pages`（01，Astro 双语站点）、`github-pages-cloudflare`（02，公开仓库 + GitHub Pages + Cloudflare）、`private-repo-cloudflare-pages`（03，私有仓库 + Cloudflare Pages）；中英文同 slug，01 保留原发布日期，02/03 发布于 2026-11-22
 - 社交分享图是 `public/og.png`（1200×630），全站共用；换图保持同名即可
 
 ## 与产品站的关系
 
-帮助文档只在这里维护：产品站（`practical-training/www/site`，域名 `https://training.wkong.kdns.fr`）已删掉自己的 `/docs` 内容与路由，导航和页脚的「帮助文档」直接外链到 `https://wkong.kdns.fr/docs/training-platform/`（英文 `/en/docs/training-platform/`）。改文档只改本仓库，产品站不用动。
+帮助文档只在这里维护：产品站（`practical-training/www/site`，域名 `https://training.wkong.kdns.fr`）的帮助入口外链到 `https://wkong.kdns.fr/docs/training-platform/`（英文 `/en/docs/training-platform/`）。产品站负责营销文案，本仓库维护使用手册，两边引用同一条能力边界：多节点资源池、自动编排与故障隔离，不承诺平台 / 数据库自动主备或实例迁移。
+
+大肥鱼平台按校授权私有化部署，本体不开源；`products.json` 不展示私有平台源码链接。大肥鱼 ERP 是独立 MIT 镜像项目，在 `openSource.json` 列出 GitHub（国外）与 Gitee（国内）仓库；代码许可不授予「大肥鱼」系列商标使用权。

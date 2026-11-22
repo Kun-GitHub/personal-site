@@ -1,7 +1,8 @@
 ---
-title: 使用 Astro 与 GitHub Pages 构建双语个人站
+title: "【个人站 01】使用 Astro 与 GitHub Pages 构建双语个人站"
 description: 记录一个以 Astro 构建、部署于 GitHub Pages 的双语静态站点：内容组织、路径设计、SEO 与部署配置。
 date: 2026-11-12
+updated: 2026-11-22
 ---
 
 本站由 Astro 构建为静态 HTML，并部署在绑定自定义域名的 GitHub Pages 上。运行站点不需要独立应用服务器或数据库。
@@ -45,22 +46,24 @@ src/
 
 ## 2. 使用 `.nojekyll` 禁用 Jekyll 处理
 
-GitHub Pages 默认会使用 Jekyll 处理构建产物。Jekyll 默认忽略以下划线开头的目录；Astro 的资源目录名为 `_astro/`。若未关闭 Jekyll 处理，相关样式和脚本可能无法发布。
+要区分两种发布方式：**从分支发布**时，GitHub Pages 默认可能经 Jekyll 处理，而 `_astro/` 等下划线目录容易受影响；把预构建产物交给分支发布时，可以在产物根保留 `.nojekyll`。
 
-在 `public/` 中加入空的 `.nojekyll` 文件，构建后它会出现在产物根目录，GitHub Pages 因此不会使用 Jekyll 处理产物。
+本站目前使用自定义 GitHub Actions 构建并上传静态 artifact，不会再额外跑一次 Jekyll，因而不依赖 `.nojekyll`。仓库保留这个空文件是兼容分支发布的约定，不是 Actions 部署必须的一步。
 
 ## 3. Cloudflare 代理与证书签发
 
-GitHub Pages 通过 HTTP-01 验证为自定义域名签发 Let's Encrypt 证书，因此域名需要解析到 GitHub 服务器。本站配置 Cloudflare 代理时，HTTP-01 验证请求未能到达 GitHub Pages，因此证书无法签发。
+本站搭建时曾遇到 Cloudflare 代理开启后 GitHub 自定义域名检查或证书配置不顺利。排查时先还原到 DNS only，能把 GitHub 域名 / 证书问题与 Cloudflare 代理问题分开；这不代表所有橙云配置都会导致验证失败。
 
 本站采用以下配置顺序：
 
 1. DNS 记录设为 **DNS only（灰色云）**；
 2. 在仓库的 Pages 设置中填写域名并保存；
-3. 等待证书签发（通常为几分钟至 24 小时），然后启用 Enforce HTTPS；
+3. 等待 GitHub 显示域名与 HTTPS 证书已就绪，然后启用 Enforce HTTPS；
 4. 将 DNS 记录改为代理模式（橙色云），并将 SSL 模式设为 **Full (strict)**。
 
-如果颠倒顺序，证书验证可能失败，错误信息也未必能明确指出代理设置是原因。
+开启代理后仍需关注 GitHub 的域名检查与证书续期。发生问题先检查 DNS、CAA 和 TLS，再按需切回 DNS only 排查。自定义 Actions 发布的域名在 Settings → Pages 中设置，不能仅靠 CNAME 文件。
+
+完整的发布与国内访问检查见[个人站 02：GitHub Pages + Cloudflare](/blog/github-pages-cloudflare/)；源码不公开的方案见[个人站 03：私有仓库接 Cloudflare Pages](/blog/private-repo-cloudflare-pages/)。两种方案都不保证中国大陆所有网络稳定可达。
 
 ## 按实际译文声明 hreflang
 

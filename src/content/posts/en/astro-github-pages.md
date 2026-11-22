@@ -1,7 +1,8 @@
 ---
-title: Putting a personal site on GitHub Pages with Astro
+title: "【个人站 01】Putting a Personal Site on GitHub Pages with Astro"
 description: Notes on building a bilingual static site with Astro and GitHub Pages, including content organisation, URL structure, SEO and deployment configuration.
 date: 2026-11-12
+updated: 2026-11-22
 ---
 
 This site is built with Astro as static HTML and deployed to GitHub Pages with a custom domain. It does not require an application server or database at runtime.
@@ -42,15 +43,17 @@ Two options are to bind a custom domain so the site sits at the domain root, as 
 
 ## 2. Disabling Jekyll with `.nojekyll`
 
-GitHub Pages may process output with Jekyll, which ignores directories beginning with an underscore. Astro places assets in `_astro/`, so the stylesheets and scripts may not be published unless Jekyll processing is disabled.
+Distinguish branch publishing from custom Actions publishing. A branch publishing source may be processed by Jekyll, affecting underscore-prefixed directories such as `_astro/`; a `.nojekyll` file in the published root disables that processing for prebuilt files.
 
-Add an empty `.nojekyll` file to `public/`; Astro copies it to the output root, where GitHub Pages detects it.
+This site currently builds and uploads static artifacts with custom GitHub Actions. That workflow does not run an additional Jekyll build and does not require `.nojekyll`; keeping the empty file is a branch-publishing compatibility convention.
 
 ## 3. Cloudflare proxy and certificate issuance
 
-GitHub validates a custom domain over HTTP-01, which requires the domain to resolve to GitHub's servers. In this site's configuration, enabling the Cloudflare proxy prevented the HTTP-01 validation request from reaching GitHub Pages, so the certificate could not be issued.
+During this site’s setup, domain checks or certificate configuration were troublesome with Cloudflare proxying enabled. Starting with DNS only separates GitHub origin/domain problems from proxy problems. It does not mean every proxied configuration inevitably prevents certificate issuance.
 
-For this setup, keep the record **DNS only** (grey cloud), enter the domain in the repository's Pages settings, wait for the certificate, and enable Enforce HTTPS. The record can then be proxied with SSL mode **Full (strict)**. Reversing this order may prevent validation; the resulting error may not identify the proxy as the cause.
+For this setup, keep the record **DNS only**, configure the hostname in GitHub Pages, wait for HTTPS readiness and enable Enforce HTTPS. Then test optional proxying with **Full (strict)**. Continue monitoring domain checks and origin-certificate renewals; restore DNS only while troubleshooting if necessary. Custom Actions deployments configure the domain in Settings → Pages, not solely through a CNAME file.
+
+For full publishing and mainland connectivity checks, read [Part 02: GitHub Pages + Cloudflare](/en/blog/github-pages-cloudflare/). For private source, read [Part 03: Private repositories and Cloudflare Pages](/en/blog/private-repo-cloudflare-pages/). Neither route guarantees access from every mainland network.
 
 ## Declare hreflang only for available translations
 
