@@ -13,7 +13,12 @@ export function postPath(lang: Lang, slug: string) {
 
 export async function listPosts(lang: Lang) {
   const all = await getCollection('posts', ({ id, data }) => id.startsWith(`${lang}/`) && !data.draft);
-  return all.sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+  // 同日文章按标题自然倒序（03 在 02 前）；最后用 id 固定顺序，避免依赖文件扫描次序。
+  return all.sort((a, b) =>
+    b.data.date.valueOf() - a.data.date.valueOf()
+    || b.data.title.localeCompare(a.data.title, lang === 'zh' ? 'zh-CN' : 'en', { numeric: true })
+    || b.id.localeCompare(a.id),
+  );
 }
 
 /** id 形如 <product>/<lang>/guide/teacher */
