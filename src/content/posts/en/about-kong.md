@@ -8,7 +8,7 @@ date: 2026-11-14
 
 I am Kong, a software engineer and technical lead working on smart hardware, IoT, audio/video and SaaS products. I care not only about whether a feature can be built, but also whether it solves a real problem, runs reliably and can be delivered sustainably by a team.
 
-My work spans mobile, backend and systems engineering: from Android and iOS development to Java and Go services, cloud-native infrastructure and engineering collaboration. My responsibilities also include architecture, technology choices, core implementation, planning and code review. I focus on moving product, engineering and teams forward together.
+My work spans mobile, backend and systems engineering: from Android and iOS development to Java and Go services, Python and AI model training, cloud-native infrastructure and engineering collaboration. My responsibilities also include architecture, technology choices, core implementation, planning and code review. I focus on moving product, engineering and teams forward together.
 
 ## Engineering problems I care about
 
